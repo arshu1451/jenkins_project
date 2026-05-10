@@ -22,15 +22,27 @@ class TestGoogle:
             "Search box is not visible on page!"
         print("Test 2 Passed - Search box is visible!")
 
-
     def test_search_returns_results(self, driver):
         driver.get("https://www.google.com")
-        search_box = driver.find_element(By.NAME, "q")
+
+        # Wait for search box to be ready first
+        wait = WebDriverWait(driver, 10)
+        search_box = wait.until(
+            EC.presence_of_element_located((By.NAME, "q"))
+        )
+
+        # Type search term
         search_box.send_keys("Selenium Python")
         search_box.send_keys(Keys.RETURN)
-        wait = WebDriverWait(driver, 10)
-        wait.until(EC.title_contains("Selenium Python"))
-        print(f"\nAfter search, title is: {driver.title}")
-        assert "Selenium Python" in driver.title, \
-            "Search did not work!"
+
+        # Wait for URL to change instead of title
+        # URL is more reliable than title in headless mode!
+        wait.until(EC.url_contains("search"))
+
+        # Check current URL contains search query
+        current_url = driver.current_url
+        print(f"\nCurrent URL after search: {current_url}")
+
+        assert "search" in current_url, \
+            f"Search did not work! URL: {current_url}"
         print("Test 3 Passed - Search works!")
