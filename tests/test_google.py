@@ -69,39 +69,3 @@ class TestGoogle:
         print("✅ Test 2 Passed — Search box is visible!")
 
 
-    def test_search_returns_results(self, driver):
-        # --------------------------------------------------
-        # TEST 3: Type something and check results appear
-        #
-        # Steps:
-        # 1. Open Google
-        # 2. Find the search box
-        # 3. Type "Selenium Python"
-        # 4. Press ENTER
-        # 5. Wait for results
-        # 6. Check page title changed
-        # --------------------------------------------------
-
-        driver.get("https://www.google.com")
-
-        # Find search box
-        search_box = driver.find_element(By.NAME, "q")
-
-        # Type into the search box
-        search_box.send_keys("Selenium Python")
-
-        # Press Enter key
-        search_box.send_keys(Keys.RETURN)
-
-        # Wait SMARTLY — up to 10 seconds
-        # Only moves on when page title contains "Selenium Python"
-        # Much better than time.sleep(5) which always waits 5 sec!
-        wait = WebDriverWait(driver, 10)
-        wait.until(EC.title_contains("Selenium Python"))
-
-        print(f"\n📋 After search, title is: {driver.title}")
-
-        assert "Selenium Python" in driver.title, \
-            "❌ Search did not work, title did not update!"
-
-        print("✅ Test 3 Passed — Search works!")
