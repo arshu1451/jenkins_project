@@ -1,0 +1,9 @@
+# Selenium 4.6+ has built-in driver management
+# No need for webdriver-manager anymore!
+selenium==4.27.1
+
+# pytest → runs your tests
+pytest==8.1.1
+
+# pytest-html → generates nice HTML report
+pytest-html==4.1.1
